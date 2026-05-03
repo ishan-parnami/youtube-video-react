@@ -106,7 +106,9 @@ const transformYouTubeVideo = (rawVideo: YouTubeVideoResponse): Video => {
       username: snippet.channelTitle,
       fullName: snippet.channelTitle,
       avatar: {
-        url: `https://i.ytimg.com/cn/${snippet.channelId}/default.jpg`,
+        // channel avatar may not be available from this endpoint; fall back to video thumbnail or app favicon
+        url:
+          snippet.thumbnails?.default?.url || snippet.thumbnails?.high?.url || '/favicon.svg',
         _id: snippet.channelId,
         localPath: snippet.channelId,
       },
