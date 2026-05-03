@@ -1,10 +1,40 @@
-import './App.css'
+import Header from './components/Header';
+import VideoGrid from './components/VideoGrid';
+import { useVideos } from './hooks/useVideos';
 
-function App() {
+const App: React.FC = () => {
+  const { videos, loading, error, refetch } = useVideos();
+
   return (
-    <>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <main className="max-w-[2000px] mx-auto">
+        <VideoGrid 
+          videos={videos}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
+      </main>
 
-export default App
+      <footer className="border-t border-gray-200 bg-white mt-12">
+        <div className="max-w-[2000px] mx-auto px-4 md:px-6 lg:px-8 py-6">
+          <p className="text-center text-sm text-gray-600">
+            Built with React, TypeScript & Tailwind CSS • Data from{' '}
+            <a 
+              href="https://freeapi.app" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-red-600 hover:text-red-700 font-medium transition-colors"
+            >
+              FreeAPI
+            </a>
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
