@@ -7,87 +7,84 @@ const VIDEOS_PER_PAGE = 12;
 export const useVideos = (): UseVideosReturn => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   
   const isMountedRef = useRef(true);
 
-  const fetchVideos = useCallback(async (page: number = 1) => {
+  const fetchVideos = useCallback(async (page: number = 1, append = false) => {
     if (!isMountedRef.current) return;
-    
-    setLoading(true);
+
+    if (append) setLoadingMore(true); else setLoading(true);
     setError(null);
-    
+
     try {
-      const data = await fetchYouTubeVideos(page, VIDEOS_PER_PAGE);
-      
-      if (isMountedRef.current) {
-        setVideos(data);
-        setCurrentPage(page);
-        // Estimate total pages (assuming ~157 total items from API)
-        setTotalPages(Math.ceil(157 / VIDEOS_PER_PAGE));
+      const result = await fetchYouTubeVideos(page, VIDEOS_PER_PAGE);
+
+      if (!isMountedRef.current) return;
+
+      if (append) {
+        setVideos((prev) => [...prev, ...result.videos]);
+      } else {
+        setVideos(result.videos);
       }
+
+      setCurrentPage(result.page);
+      setHasMore(result.nextPage);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
-      
+
       if (isMountedRef.current) {
         setError(errorMessage);
       }
-      
+
       console.error('Error fetching videos:', err);
     } finally {
       if (isMountedRef.current) {
         setLoading(false);
+        setLoadingMore(false);
       }
     }
   }, []);
 
   const refetch = useCallback(async () => {
-    await fetchVideos(currentPage);
-  }, [fetchVideos, currentPage]);
+    await fetchVideos(1, false);
+  }, [fetchVideos]);
 
-  const nextPage = useCallback(async () => {
-    if (currentPage < totalPages) {
-      await fetchVideos(currentPage + 1);
-    }
-  }, [currentPage, totalPages, fetchVideos]);
-
-  const prevPage = useCallback(async () => {
-    if (currentPage > 1) {
-      await fetchVideos(currentPage - 1);
-    }
-  }, [currentPage, fetchVideos]);
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loadingMore) return;
+    await fetchVideos(currentPage + 1, true);
+  }, [currentPage, fetchVideos, hasMore, loadingMore]);
 
   useEffect(() => {
     isMountedRef.current = true;
-    
+
     let cancelled = false;
-    
-    const loadVideos = async () => {
+
+    const loadInitial = async () => {
       if (cancelled) return;
-      await fetchVideos(currentPage);
+      await fetchVideos(1, false);
     };
-    
-    loadVideos();
-    
+
+    loadInitial();
+
     return () => {
       cancelled = true;
       isMountedRef.current = false;
     };
-  }, []);
+  }, [fetchVideos]);
 
   return {
     videos,
     loading,
+    loadingMore,
     error,
     refetch,
+    hasMore,
+    loadMore,
     currentPage,
-    totalPages,
-    hasNextPage: currentPage < totalPages,
-    hasPrevPage: currentPage > 1,
-    nextPage,
-    prevPage,
   };
 };
 

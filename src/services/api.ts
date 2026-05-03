@@ -129,8 +129,16 @@ interface PaginatedVideoResponse {
   currentPageItems: number;
   data: YouTubeVideoResponse[];
 }
-
-export const fetchYouTubeVideos = async (page: number = 1, limit: number = 12): Promise<Video[]> => {
+export const fetchYouTubeVideos = async (
+  page: number = 1,
+  limit: number = 12
+): Promise<{
+  videos: Video[];
+  page: number;
+  nextPage: boolean;
+  totalPages: number;
+  totalItems: number;
+}> => {
   try {
     const response = await apiClient.get<ApiResponse<PaginatedVideoResponse>>(
       API_CONFIG.ENDPOINTS.YOUTUBE_VIDEOS,
@@ -148,8 +156,15 @@ export const fetchYouTubeVideos = async (page: number = 1, limit: number = 12): 
 
     const videosData = response.data.data;
     const rawVideos = Array.isArray(videosData?.data) ? videosData.data : [];
-    
-    return rawVideos.map(transformYouTubeVideo);
+    const videos = rawVideos.map(transformYouTubeVideo);
+
+    return {
+      videos,
+      page: videosData.page,
+      nextPage: Boolean(videosData.nextPage),
+      totalPages: videosData.totalPages,
+      totalItems: videosData.totalItems,
+    };
   } catch (error) {
     const errorMessage = handleApiError(error);
     throw new Error(errorMessage, { cause: error });
