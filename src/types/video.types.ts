@@ -42,4 +42,10 @@ export interface UseVideosReturn {
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  currentPage: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: () => Promise<void>;
+  prevPage: () => Promise<void>;
 }

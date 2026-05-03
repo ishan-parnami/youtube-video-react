@@ -128,10 +128,16 @@ interface PaginatedVideoResponse {
   data: YouTubeVideoResponse[];
 }
 
-export const fetchYouTubeVideos = async (): Promise<Video[]> => {
+export const fetchYouTubeVideos = async (page: number = 1, limit: number = 12): Promise<Video[]> => {
   try {
     const response = await apiClient.get<ApiResponse<PaginatedVideoResponse>>(
-      API_CONFIG.ENDPOINTS.YOUTUBE_VIDEOS
+      API_CONFIG.ENDPOINTS.YOUTUBE_VIDEOS,
+      {
+        params: {
+          page,
+          limit,
+        },
+      }
     );
 
     if (!response.data || !response.data.success) {
