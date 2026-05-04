@@ -8,27 +8,12 @@ interface VideoCardProps {
 }
 
 export const VideoCard: React.FC<VideoCardProps> = memo(({ video }) => {
-  const {
-    thumbnail,
-    title,
-    duration,
-    owner,
-    views,
-    createdAt,
-  } = video;
+  const { thumbnail, title, duration, owner, views, createdAt, } = video;
 
   return (
-    <article 
-      className="group cursor-pointer"
-      aria-label={`Video: ${title}`}
-    >
+    <article className="group cursor-pointer" aria-label={`Video: ${title}`}>
       <div className="relative aspect-video mb-3 overflow-hidden rounded-xl bg-gray-200">
-        <img
-          src={thumbnail.url}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-        />
+        <img src={thumbnail.url} alt={title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy"/>
         
         <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs font-semibold px-2 py-1 rounded">
           {formatDuration(duration)}
@@ -39,12 +24,7 @@ export const VideoCard: React.FC<VideoCardProps> = memo(({ video }) => {
 
       <div className="flex gap-3">
         <div className="flex-shrink-0">
-          <img
-            src={owner.avatar.url}
-            alt={owner.fullName}
-            className="w-9 h-9 rounded-full object-cover"
-            loading="lazy"
-          />
+          <img src={owner.avatar.url} alt={owner.fullName} className="w-9 h-9 rounded-full object-cover" loading="lazy"/>
         </div>
 
         <div className="flex-1 min-w-0">

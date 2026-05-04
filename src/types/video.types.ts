@@ -40,12 +40,11 @@ export interface Video {
 export interface UseVideosReturn {
   videos: Video[];
   loading: boolean;
+  loadingMore: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  // Infinite loading
+  hasMore: boolean;
+  loadMore: () => Promise<void>;
   currentPage: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-  nextPage: () => Promise<void>;
-  prevPage: () => Promise<void>;
 }
