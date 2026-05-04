@@ -1,5 +1,7 @@
 # YouTube Video Listing UI
 
+Deployed link: [Render](https://youtube-video-react.onrender.com/)
+
 A modern, responsive YouTube-style video listing interface built with React, TypeScript, and Tailwind CSS. This project fetches video data from the FreeAPI YouTube Videos API and displays it in a clean, user-friendly grid layout.
 
 ![Project Preview](./preview.png)
@@ -17,7 +19,7 @@ A modern, responsive YouTube-style video listing interface built with React, Typ
 
 ## 🛠️ Tech Stack
 
-- **Framework:** React 18
+- **Framework:** React 19
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Build Tool:** Vite
@@ -30,13 +32,13 @@ A modern, responsive YouTube-style video listing interface built with React, Typ
 
 Before you begin, ensure you have the following installed:
 - Node.js (v18 or higher)
-- npm or yarn package manager
+- npm, yarn, bun, or deno package manager
 
 ## 🔧 Installation
 
 1. **Clone the repository**
 ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Ishan-Parnami/Youtube-Video-React.git
    cd youtube-video-ui
 ```
 
@@ -221,9 +223,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Ishan Parnami**
-- GitHub: [@ishanparnami](https://github.com/yourusername)
-- LinkedIn: [Ishan Parnami](https://linkedin.com/in/yourprofile)
-- Blog: [Hashnode](https://ishan_dev.hashnode.dev)
+- GitHub: [@ishanparnami](https://github.com/Ishan-Parnami)
+- LinkedIn: [Ishan Parnami](https://www.linkedin.com/in/ishan-parnami/)
+- Blog: [Hashnode](https://hashnode.com/@ishanparnami)
 
 ## 🙏 Acknowledgments
 
