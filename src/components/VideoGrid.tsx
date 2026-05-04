@@ -14,15 +14,7 @@ interface VideoGridProps {
   onRetry?: () => void;
 }
 
-export const VideoGrid: React.FC<VideoGridProps> = ({ 
-  videos, 
-  loading, 
-  loadingMore,
-  hasMore,
-  loadMore,
-  error, 
-  onRetry 
-}) => {
+export const VideoGrid: React.FC<VideoGridProps> = ({ videos, loading, loadingMore, hasMore, loadMore, error, onRetry }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -71,11 +63,7 @@ export const VideoGrid: React.FC<VideoGridProps> = ({
   }
 
   return (
-    <div 
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 px-4 md:px-6 lg:px-8 py-6"
-      role="feed"
-      aria-label="YouTube videos"
-    >
+    <div  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 px-4 md:px-6 lg:px-8 py-6" role="feed" aria-label="YouTube videos">
       {videos.map((video) => (
         <VideoCard key={video._id} video={video} />
       ))}

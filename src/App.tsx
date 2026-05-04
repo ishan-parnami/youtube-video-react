@@ -18,27 +18,14 @@ const App: React.FC = () => {
       <Header />
       
       <main className="max-w-[2000px] mx-auto flex-1 flex flex-col">
-        <VideoGrid 
-          videos={videos}
-          loading={loading}
-          loadingMore={loadingMore}
-          hasMore={hasMore}
-          loadMore={loadMore}
-          error={error}
-          onRetry={refetch}
-        />
+        <VideoGrid videos={videos} loading={loading} loadingMore={loadingMore} hasMore={hasMore} loadMore={loadMore} error={error} onRetry={refetch} />
       </main>
 
       <footer className="border-t border-gray-200 bg-white">
         <div className="max-w-[2000px] mx-auto px-4 md:px-6 lg:px-8 py-6">
           <p className="text-center text-sm text-gray-600">
             Built with React, TypeScript & Tailwind CSS • Data from{' '}
-            <a 
-              href="https://freeapi.app" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-red-600 hover:text-red-700 font-medium transition-colors"
-            >
+            <a href="https://freeapi.app" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-700 font-medium transition-colors">
               FreeAPI
             </a>
           </p>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { type Video, type UseVideosReturn } from '../types/video.types';
-import { fetchYouTubeVideos } from '../services/api';
+import fetchYouTubeVideos from '../services/api';
 
 const VIDEOS_PER_PAGE = 12;
 
@@ -17,7 +17,9 @@ export const useVideos = (): UseVideosReturn => {
   const fetchVideos = useCallback(async (page: number = 1, append = false) => {
     if (!isMountedRef.current) return;
 
-    if (append) setLoadingMore(true); else setLoading(true);
+    if (append) setLoadingMore(true);
+    else setLoading(true);
+
     setError(null);
 
     try {
@@ -76,16 +78,7 @@ export const useVideos = (): UseVideosReturn => {
     };
   }, [fetchVideos]);
 
-  return {
-    videos,
-    loading,
-    loadingMore,
-    error,
-    refetch,
-    hasMore,
-    loadMore,
-    currentPage,
-  };
+  return { videos, loading, loadingMore, error, refetch, hasMore, loadMore, currentPage, };
 };
 
 export default useVideos;

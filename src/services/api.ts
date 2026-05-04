@@ -129,10 +129,7 @@ interface PaginatedVideoResponse {
   currentPageItems: number;
   data: YouTubeVideoResponse[];
 }
-export const fetchYouTubeVideos = async (
-  page: number = 1,
-  limit: number = 12
-): Promise<{
+export const fetchYouTubeVideos = async ( page: number = 1, limit: number = 12 ): Promise<{
   videos: Video[];
   page: number;
   nextPage: boolean;
@@ -171,8 +168,4 @@ export const fetchYouTubeVideos = async (
   }
 };
 
-export const apiService = {
-  getVideos: fetchYouTubeVideos,
-};
-
-export default apiService;
+export default fetchYouTubeVideos;
